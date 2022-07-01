@@ -7,7 +7,7 @@ const About: NextPage = () => {
       <Head>
         <title>About Page</title>
       </Head>
-      <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
+      <div className="mx-auto flex max-w-sm items-center space-x-4 rounded-xl bg-white p-6 shadow-lg">
         <div className="shrink-0">
           <span className="h-12 w-12" />
         </div>

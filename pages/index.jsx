@@ -8,7 +8,7 @@ const Filter = ({ value, onChange }) => {
   };
 
   return (
-    <div>
+    <div class="mt-10 mb-8 space-x-4">
       <a href="#" onClick={handleClick.bind(null, "ALL")}>
         All
       </a>
@@ -26,9 +26,14 @@ const TodoItem = ({ item, onCheck }) => {
     onCheck(item);
   };
   return (
-    <label>
-      <input type="checkbox" checked={item.done} onChange={handleChange} />
-      <span>{item.text}</span>
+    <label className="block py-4 text-left">
+      <input
+        className="border- h-5 w-5 align-middle"
+        type="checkbox"
+        checked={item.done}
+        onChange={handleChange}
+      />
+      <span className="text-lg">&nbsp;{item.text}</span>
     </label>
   );
 };
@@ -47,6 +52,7 @@ const Input = ({ onAdd }) => {
   return (
     <div>
       <input
+        className="rounded-lg border-x-4 border-violet-300 p-5 opacity-75 "
         type="text"
         placeholder="reactを勉強する"
         value={text}
@@ -83,15 +89,22 @@ const Home = () => {
 
   return (
     <div className="text-center">
-      <div className="shadow-lg p-6 m-10 rounded-lg bg-violet-100 shadow-white opacity-40">
+      <div className="m-10 rounded-lg bg-violet-100 p-6 opacity-40 shadow-lg shadow-white">
         TODO LIST
       </div>
       <Input onAdd={handleAdd} />
       <Filter onChange={handleFilterChange} value={filters} />
-      {displayItems.map(item => (
-        <TodoItem key={item.text} item={item} onCheck={handleCheck} />
-      ))}
-      <div>{displayItems.length} items</div>
+      <div
+        className="mx-auto w-80 divide-y divide-blue-200 rounded-md border-2 border-blue-300 bg-purple-50 p-5
+
+"
+      >
+        <p>項目</p>
+        {displayItems.map(item => (
+          <TodoItem key={item.text} item={item} onCheck={handleCheck} />
+        ))}
+      </div>
+      <div className="mt-5 ">{displayItems.length} items</div>
     </div>
   );
 };
