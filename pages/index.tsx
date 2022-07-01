@@ -1,14 +1,20 @@
-import { useState } from "react";
-
+import { useState, FC, MouseEvent, ChangeEvent, KeyboardEvent } from "react";
 const getKey = () => Math.random().toString(32).substring(2);
-const Filter = ({ value, onChange }) => {
-  const handleClick = (key, e) => {
+
+type todoItem = {
+  key: string;
+  text: string;
+  done: boolean;
+};
+
+const Filter = (value: any, onChange: any) => {
+  const handleClick = (key: any, e: any) => {
     e.preventDefault();
     onChange(key);
   };
 
   return (
-    <div class="mt-10 mb-8 space-x-4">
+    <div className="mt-10 mb-8 space-x-4">
       <a href="#" onClick={handleClick.bind(null, "ALL")}>
         All
       </a>
@@ -21,10 +27,8 @@ const Filter = ({ value, onChange }) => {
     </div>
   );
 };
-const TodoItem = ({ item, onCheck }) => {
-  const handleChange = () => {
-    onCheck(item);
-  };
+const TodoItem = (item: any) => {
+  const handleChange = () => {};
   return (
     <label className="block py-4 text-left">
       <input
@@ -38,12 +42,13 @@ const TodoItem = ({ item, onCheck }) => {
   );
 };
 
-const Input = ({ onAdd }) => {
-  const [text, setText] = useState("");
+const Input = (onAdd: any) => {
+  const [text, setText] = useState<string>("");
 
-  const handleChange = e => setText(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setText(e.target.value);
 
-  const handleKeyDown = e => {
+  const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       onAdd(text);
       setText("");
@@ -62,23 +67,23 @@ const Input = ({ onAdd }) => {
     </div>
   );
 };
-const Home = () => {
-  const [items, setItems] = useState([]);
+const Home: FC = () => {
+  const [items, setItems] = useState<any>([]);
   const [filters, setFilter] = useState("ALL");
 
-  const handleAdd = text => {
-    setItems([...items, { key: getKey(), text, done: false }]);
+  const handleAdd = (text: string) => {
+    setItems([...items, { key: getKey(), text: text, done: false }]);
   };
 
-  const handleFilterChange = value => setFilter(value);
+  const handleFilterChange: any = (value: string) => setFilter(value);
 
-  const displayItems = items.filter(item => {
+  const displayItems = items.filter((item: todoItem) => {
     if (filters === "ALL") return true;
     if (filters === "TODO") return !item.done;
     if (filters === "DONE") return item.done;
   });
-  const handleCheck = checked => {
-    const newItems = items.map(item => {
+  const handleCheck = (checked: todoItem) => {
+    const newItems = items.map((item: todoItem) => {
       if (item.key === checked.key) {
         item.done = !item.done;
       }
@@ -94,14 +99,10 @@ const Home = () => {
       </div>
       <Input onAdd={handleAdd} />
       <Filter onChange={handleFilterChange} value={filters} />
-      <div
-        className="mx-auto w-80 divide-y divide-blue-200 rounded-md border-2 border-blue-300 bg-purple-50 p-5
-
-"
-      >
+      <div className="mx-auto w-80 divide-y divide-blue-200 rounded-md border-2 border-blue-300 bg-purple-50 p-5">
         <p>項目</p>
-        {displayItems.map(item => (
-          <TodoItem key={item.text} item={item} onCheck={handleCheck} />
+        {displayItems.map((i: todoItem) => (
+          <TodoItem itemp={i} />
         ))}
       </div>
       <div className="mt-5 ">{displayItems.length} items</div>
