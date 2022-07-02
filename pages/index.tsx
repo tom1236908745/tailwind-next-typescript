@@ -14,10 +14,14 @@ type todoItem = {
   done: boolean;
 };
 
-const Filter = (value: any, onChange: any) => {
-  const handleClick = (key: any, e: any) => {
+type FilterProps = {
+  value: string;
+  onChange: (key: string) => void;
+};
+const Filter: VFC<FilterProps> = props => {
+  const handleClick = (key: string, e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    onChange(key);
+    props.onChange(key);
   };
 
   return (
@@ -91,7 +95,7 @@ const Home = () => {
     setItems([...items, { key: getKey(), text: text, done: false }]);
   };
 
-  const handleFilterChange: any = (value: string) => setFilter(value);
+  const handleFilterChange = (value: string) => setFilter(value);
 
   const displayItems = items.filter((item: todoItem) => {
     if (filters === "ALL") return true;
@@ -114,7 +118,7 @@ const Home = () => {
         TODO LIST
       </div>
       <Input onAdd={handleAdd} />
-      <Filter onChange={handleFilterChange} value={filters} />
+      <Filter value={filters} onChange={handleFilterChange} />
       <div className="mx-auto w-80 divide-y divide-blue-200 rounded-md border-2 border-blue-300 bg-purple-50 p-5">
         <p>項目</p>
         {displayItems.map((item: todoItem) => (
