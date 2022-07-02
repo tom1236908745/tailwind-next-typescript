@@ -1,4 +1,11 @@
-import { useState, FC, MouseEvent, ChangeEvent, KeyboardEvent } from "react";
+import {
+  useState,
+  FC,
+  MouseEvent,
+  ChangeEvent,
+  KeyboardEvent,
+  VFC,
+} from "react";
 const getKey = () => Math.random().toString(32).substring(2);
 
 type todoItem = {
@@ -27,30 +34,39 @@ const Filter = (value: any, onChange: any) => {
     </div>
   );
 };
-const TodoItem = (item: any) => {
-  const handleChange = () => {};
+
+type TodoItemProps = {
+  item: todoItem;
+  onCheck: (checked: todoItem) => void;
+};
+const TodoItem: VFC<TodoItemProps> = props => {
+  const handleChange = () => {
+    props.onCheck(props.item);
+  };
   return (
     <label className="block py-4 text-left">
       <input
         className="border- h-5 w-5 align-middle"
         type="checkbox"
-        checked={item.done}
+        checked={props.item.done}
         onChange={handleChange}
       />
-      <span className="text-lg">&nbsp;{item.text}</span>
+      <span className="text-lg">&nbsp;{props.item.text}</span>
     </label>
   );
 };
-
-const Input = (onAdd: any) => {
+type InputProps = {
+  onAdd: (text: string) => void;
+};
+const Input: VFC<InputProps> = props => {
   const [text, setText] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setText(e.target.value);
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      onAdd(text);
+      props.onAdd(text);
       setText("");
     }
   };
@@ -67,8 +83,8 @@ const Input = (onAdd: any) => {
     </div>
   );
 };
-const Home: FC = () => {
-  const [items, setItems] = useState<any>([]);
+const Home = () => {
+  const [items, setItems] = useState<todoItem[]>([]);
   const [filters, setFilter] = useState("ALL");
 
   const handleAdd = (text: string) => {
@@ -101,8 +117,8 @@ const Home: FC = () => {
       <Filter onChange={handleFilterChange} value={filters} />
       <div className="mx-auto w-80 divide-y divide-blue-200 rounded-md border-2 border-blue-300 bg-purple-50 p-5">
         <p>項目</p>
-        {displayItems.map((i: todoItem) => (
-          <TodoItem itemp={i} />
+        {displayItems.map((item: todoItem) => (
+          <TodoItem key={item.key} item={item} onCheck={handleCheck} />
         ))}
       </div>
       <div className="mt-5 ">{displayItems.length} items</div>
