@@ -19,7 +19,7 @@ type FilterProps = {
   onChange: (key: string) => void;
 };
 
-const Filter: VFC<FilterProps> = props => {
+const Filter: FC<FilterProps> = props => {
   const [checkedList, setCheckedList] = useState<boolean[]>([
     true,
     false,
@@ -117,7 +117,7 @@ const TodoItem: VFC<TodoItemProps> = props => {
 type InputProps = {
   onAdd: (text: string) => void;
 };
-const Input: VFC<InputProps> = props => {
+const Input: FC<InputProps> = props => {
   const [text, setText] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
