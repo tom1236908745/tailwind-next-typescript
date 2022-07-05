@@ -5,12 +5,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "yarn run build && next export",
     "start": "next start",
-    "lint": "next lint",
-    "export": "next build && next export",
-    "fix:lint": "next lint --fix"
+    "serve": "npm run build && firebase emulators:start --only functions,hosting",
+    "shell": "npm run build && firebase functions:shell",
+    "deploy": "firebase deploy --only functions,hosting",
+    "logs": "firebase functions:log"
   },
   "dependencies": {
+    "dotenv": "^16.0.1",
+    "firebase": "^9.8.4",
     "next": "12.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0"

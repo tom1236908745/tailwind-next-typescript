@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoItem from "../components/todoItem/index";
 import Input from "../components/input/Index";
 import Filter from "../components/filter/Index";
+import firebaseApp from "../plugins/firebase";
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  getDocs,
+} from "firebase/firestore";
+import { loadGetInitialProps } from "next/dist/shared/lib/utils";
 
 const getKey = () => Math.random().toString(32).substring(2);
 
@@ -15,7 +25,11 @@ const Home = () => {
   const [items, setItems] = useState<todoItem[]>([]);
   const [filters, setFilter] = useState("ALL");
 
-  const handleAdd = (text: string) => {
+  useEffect(() => {
+    // const db = getFirestore(firebaseApp);
+    // const querySnapshot = getDocs(collection(db, "item"));
+  });
+  const handleAdd = async (text: string) => {
     setItems([...items, { key: getKey(), text: text, done: false }]);
   };
 
