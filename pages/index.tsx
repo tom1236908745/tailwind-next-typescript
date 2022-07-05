@@ -12,6 +12,8 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { loadGetInitialProps } from "next/dist/shared/lib/utils";
+import { useRecoilState } from "recoil";
+import { itemState } from "../atoms/CenterAtom";
 
 const getKey = () => Math.random().toString(32).substring(2);
 
@@ -24,13 +26,15 @@ type todoItem = {
 const Home = () => {
   const [items, setItems] = useState<todoItem[]>([]);
   const [filters, setFilter] = useState("ALL");
+  const [itemAtom, setItemAtom] = useRecoilState(itemState);
 
   useEffect(() => {
-    // const db = getFirestore(firebaseApp);
-    // const querySnapshot = getDocs(collection(db, "item"));
+    const db = getFirestore(firebaseApp);
+    const querySnapshot = getDocs(collection(db, "item"));
   });
   const handleAdd = async (text: string) => {
     setItems([...items, { key: getKey(), text: text, done: false }]);
+    setItemAtom(text);
   };
 
   const handleFilterChange = (value: string) => setFilter(value);

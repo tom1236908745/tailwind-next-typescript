@@ -1,7 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRecoilValue } from "recoil";
+import { itemState, charCountState } from "../atoms/CenterAtom";
 
 const About: NextPage = () => {
+  const item = useRecoilValue(charCountState);
   return (
     <div>
       <Head>
@@ -12,8 +15,8 @@ const About: NextPage = () => {
           <span className="h-12 w-12" />
         </div>
         <div>
-          <div className="text-xl font-medium text-black">TODO LIST</div>
-          <p className="text-slate-500">やる事を管理しよう！!</p>
+          <div className="text-xl font-medium text-black">新着</div>
+          <p className="text-slate-500">{item}が追加されました!</p>
         </div>
       </div>
     </div>
