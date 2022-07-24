@@ -18,4 +18,6 @@ const firebaseApp = !getApps().length
   ? initializeApp(firebaseConfig)
   : getApp();
 
-export default firebaseApp;
+const firestore = getFirestore();
+
+export { firebaseApp, firestore };

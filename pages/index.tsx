@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TodoItem from "../components/todoItem/index";
 import Input from "../components/input/Index";
 import Filter from "../components/filter/Index";
-import firebaseApp from "../plugins/firebase";
+import { firebaseApp, firestore } from "../plugins/firebase";
 import {
   getFirestore,
   collection,
@@ -29,9 +29,9 @@ const Home = () => {
   const [itemAtom, setItemAtom] = useRecoilState(itemState);
 
   useEffect(() => {
-    const db = getFirestore(firebaseApp);
-    const querySnapshot = getDocs(collection(db, "item"));
+    const querySnapshot = getDocs(collection(firestore, "item"));
   });
+
   const handleAdd = async (text: string) => {
     setItems([...items, { key: getKey(), text: text, done: false }]);
     setItemAtom(text);
