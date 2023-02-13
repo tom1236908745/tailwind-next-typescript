@@ -48,7 +48,7 @@ const Home = () => {
 
       <Filter value={filters} onChange={handleFilterChange} />
       <Input onAdd={handleAdd} />
-      <div
+      <divadd
         className={`mx-auto w-1/2 divide-y ${
           displayItems.length > 0 ? "divide-blue-200" : ""
         } rounded-md border-2 border-violet-300 bg-purple-50 p-5`}
@@ -62,7 +62,7 @@ const Home = () => {
         {displayItems.map((item: todoItem) => (
           <TodoItem key={item.key} item={item} onCheck={handleCheck} />
         ))}
-      </div>
+      </divadd>
       <div className="mt-5 ">{displayItems.length} items</div>
     </div>
   );

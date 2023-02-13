@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import TodoItem from "../components/todoItem/index";
 import Input from "../components/input/Index";
 import Filter from "../components/filter/Index";
-
+import { firebaseApp, firestore } from "../plugins/firebase";
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  getDocs,
+} from "firebase/firestore";
 import { loadGetInitialProps } from "next/dist/shared/lib/utils";
 import { useRecoilState } from "recoil";
 import { itemState } from "../atoms/CenterAtom";
@@ -19,6 +27,10 @@ const Home = () => {
   const [items, setItems] = useState<todoItem[]>([]);
   const [filters, setFilter] = useState("ALL");
   const [itemAtom, setItemAtom] = useRecoilState(itemState);
+
+  useEffect(() => {
+    const querySnapshot = getDocs(collection(firestore, "item"));
+  });
 
   const handleAdd = async (text: string) => {
     setItems([...items, { key: getKey(), text: text, done: false }]);
